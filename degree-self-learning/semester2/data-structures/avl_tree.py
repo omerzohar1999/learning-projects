@@ -207,6 +207,14 @@ class MyAVLTreeNode:
         if self.right is not None:
             self.right.print_node(level + 1)
 
+    def traversal(self, arr: list):
+        if self.left is not None:
+            arr.append(self.left.traversal())
+        arr.append(self.value)
+        if self.right is not None:
+            arr.append(self.right.traversal())
+
+
 
 class MyAVLTree:
     def __init__(self):
@@ -236,5 +244,10 @@ class MyAVLTree:
     def __getitem__(self, key):
         return self.root_node.find(key)
 
-    def print_tree(self):
+    def print_tree_visual(self):
         self.root_node.print_node(0)
+
+    def tree_traversal(self):
+        arr = []
+        self.root_node.traversal(arr)
+        return arr
