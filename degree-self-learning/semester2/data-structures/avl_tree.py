@@ -238,6 +238,9 @@ class MyAVLTree:
             self.root_node = self.root_node.parent
         self.root_node.top_down_find_height()
 
+    def delete(self, key):  # TODO
+        pass
+
     def __setitem__(self, key, value):
         self.insert(key, value)
 

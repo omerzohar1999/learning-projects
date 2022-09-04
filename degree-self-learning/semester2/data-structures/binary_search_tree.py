@@ -8,7 +8,6 @@ class MyTreeNode:
         self.depth = 0
         self.height = 0
         self.maintain_height_and_depth()
-        
 
     def maintain_height_and_depth(self):
         pointer = self
@@ -19,14 +18,14 @@ class MyTreeNode:
             left_height = -1 if pointer.left is None else pointer.left.height
             pointer.height = max(left_height, right_height) + 1
             pointer = pointer.parent
-    
+
     def top_down_find_depth(self, depth):
         self.depth = depth + 1
         if self.right:
             self.right.top_down_find_depth(self.depth)
         if self.left:
             self.left.top_down_find_depth(self.depth)
-    
+
     def top_down_find_height(self):
         if self.left is None:
             left_height = 0
@@ -38,11 +37,11 @@ class MyTreeNode:
         else:
             self.right.top_down_find_height()
             right_height = self.right.height
-        self.height = max(left_height, right_height) + 1    
+        self.height = max(left_height, right_height) + 1
 
     def left(self):
         return self.left
-    
+
     def right(self):
         return self.right
 
@@ -51,7 +50,7 @@ class MyTreeNode:
 
     def value(self):
         return self.value
-    
+
     def is_root(self):
         return self.parent is None
 
@@ -109,8 +108,6 @@ class MyTreeNode:
         if self.right is not None:
             self.right.print_node(level + 1)
 
-    
-        
 
 class MyBinarySearchTree:
     def __init__(self):
@@ -124,16 +121,19 @@ class MyBinarySearchTree:
 
     def max(self):
         return self.root_node.max()
-    
+
     def insert(self, key, value):
         if self.root_node is None:
             self.root_node = MyTreeNode(key, value, None)
         else:
-            self.root_node.insert(MyTreeNode(key,value, None))
+            self.root_node.insert(MyTreeNode(key, value, None))
         while self.root_node.parent is not None:
             self.root_node = self.root_node.parent
         self.root_node.top_down_find_height()
-    
+
+    def delete(self, key):  # TODO
+        pass
+
     def __setitem__(self, key, value):
         self.insert(key, value)
 
