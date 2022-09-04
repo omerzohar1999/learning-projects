@@ -1,0 +1,2 @@
+class MyWAVLTree:
+    pass

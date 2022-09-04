@@ -1,0 +1,2 @@
+class MyHashTable:
+    pass
