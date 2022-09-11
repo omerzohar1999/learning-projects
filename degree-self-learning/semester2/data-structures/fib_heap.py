@@ -1,2 +1,2 @@
-class MyFibTree:  # TODO
+class MyFibHeap:  # TODO
     pass

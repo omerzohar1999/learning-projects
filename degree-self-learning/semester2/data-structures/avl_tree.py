@@ -170,7 +170,7 @@ class MyAVLTreeNode:
         former_parent = C.parent
 
         A.left = B.right
-        A.left.parent = A
+        A.left.parent = A  # got an attributeError here, need fixing. TODO
 
         C.right = B.left
         C.right.parent = C
@@ -219,9 +219,6 @@ class MyAVLTreeNode:
 class MyAVLTree:
     def __init__(self):
         self.root_node = None
-
-    def balance_tree(self, node):
-        pass
 
     def min(self):
         return self.root_node.min()
