@@ -31,7 +31,7 @@ class MyLinkedList:
         self.head = new_head
         self.size += 1
 
-    def __sizeof__(self) -> int:
+    def __len__(self) -> int:
         return self.size
 
     def insert_last(self, value):
@@ -76,7 +76,7 @@ class MyLinkedList:
     def pop_at(self, position):
         assert position < self.size
         if position == 0:
-            return self.delete_first()
+            return self.pop_first()
         else:
             i = 0
             pointer = self.head
@@ -93,9 +93,22 @@ class MyLinkedList:
         while pointer.get_value() == value:
             pointer = pointer.get_next()
             self.head = pointer
+            self.size -= 1
         if pointer is not None:
             while pointer.get_next() is not None:
                 if pointer.get_next().get_value() == value:
                     pointer.set_next(pointer.get_next().get_next())
+                    self.size -= 1
                 else:
                     pointer = pointer.get_next()
+    
+    def is_empty(self):
+        return self.size == 0
+
+
+def test():
+    new_list = MyLinkedList(5)
+    new_list.pop_first()
+    print(len(new_list))
+
+test()
