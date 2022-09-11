@@ -169,7 +169,6 @@ class MyAVLTreeNode:
         C = self
         former_parent = C.parent
 
-
         A.left = B.right
         if A.left is not None:
             A.left.parent = A  # got an attributeError here, need fixing. TODO
@@ -218,7 +217,6 @@ class MyAVLTreeNode:
             self.right.traversal(arr)
 
 
-
 class MyAVLTree:
     def __init__(self):
         self.root_node = None
@@ -237,9 +235,6 @@ class MyAVLTree:
         while self.root_node.parent is not None:
             self.root_node = self.root_node.parent
         self.root_node.top_down_find_height()
-
-    def delete(self, key):  # TODO
-        pass
 
     def __setitem__(self, key, value):
         self.insert(key, value)

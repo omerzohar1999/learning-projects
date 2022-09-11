@@ -1,7 +1,7 @@
 from random import Random
 
 
-def quickselect_random(array: list, pos: int):  
+def quickselect_random(array: list, pos: int):
     if len(array) == 1:
         return array[0]
     random = Random()

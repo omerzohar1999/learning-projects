@@ -87,7 +87,7 @@ class MyLinkedList:
             pointer.set_next(pointer.get_next().get_next())
             self.size -= 1
             return to_return
-    
+
     def delete(self, value):
         pointer = self.head
         while pointer.get_value() == value:
@@ -99,4 +99,3 @@ class MyLinkedList:
                     pointer.set_next(pointer.get_next().get_next())
                 else:
                     pointer = pointer.get_next()
-
