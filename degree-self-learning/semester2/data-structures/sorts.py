@@ -139,7 +139,7 @@ def test():
     arr = [1, 2, 1, 1, 3, 3, 1, 3, 5, 4, 5, 3]
     insertion_sort(arr)
     print(arr)
-    # print(avl_sort([1, 2, 1, 1, 3, 3, 1, 3, 5, 4, 5, 3]))  # will work after avl tree is fixed. TODO
+    print(avl_sort([1, 7, 2, 4, 0, 9, 3]))
     print(heap_sort([1, 2, 1, 1, 3, 3, 1, 3, 5, 4, 5, 3]))
     print(quicksort_deterministic([1, 7, 2, 4, 0, 9, 3]))
     print(quicksort_random([1, 7, 2, 4, 0, 9, 3]))

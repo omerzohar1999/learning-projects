@@ -169,11 +169,14 @@ class MyAVLTreeNode:
         C = self
         former_parent = C.parent
 
+
         A.left = B.right
-        A.left.parent = A  # got an attributeError here, need fixing. TODO
+        if A.left is not None:
+            A.left.parent = A  # got an attributeError here, need fixing. TODO
 
         C.right = B.left
-        C.right.parent = C
+        if C.right is not None:
+            C.right.parent = C
 
         B.left = C
         B.right = A
@@ -201,18 +204,18 @@ class MyAVLTreeNode:
                 former_parent.right = new_parent
 
     def print_node(self, level=0):
-        if self.left is not None:
-            self.left.print_node(level + 1)
-        print(' ' * 4 * level + '-> ' + str(self))
         if self.right is not None:
             self.right.print_node(level + 1)
+        print(' ' * 4 * level + '-> ' + str(self))
+        if self.left is not None:
+            self.left.print_node(level + 1)
 
     def traversal(self, arr: list):
         if self.left is not None:
-            arr.append(self.left.traversal())
-        arr.append(self.value)
+            self.left.traversal(arr)
+        arr.append(self.key)
         if self.right is not None:
-            arr.append(self.right.traversal())
+            self.right.traversal(arr)
 
 
 
