@@ -17,13 +17,11 @@ class MyListNode:
 
 
 class MyLinkedList:
-    def __init__(self):
+    def __init__(self, *args):
         self.head = None
         self.size = 0
-
-    def __init__(self, value):
-        self.head = MyListNode(value)
-        self.size = 1
+        for val in args:
+            self.insert_last(val)
 
     def insert_first(self, value):
         new_head = MyListNode(value)
@@ -104,6 +102,16 @@ class MyLinkedList:
     
     def is_empty(self):
         return self.size == 0
+
+    def __str__(self):
+        ret = ""
+        pointer = self.head
+        while pointer is not None:
+            ret += str(pointer.get_value())
+            if pointer.get_next() is not None:
+                ret += ", "
+            pointer = pointer.get_next()
+        return ret
 
 
 def test():

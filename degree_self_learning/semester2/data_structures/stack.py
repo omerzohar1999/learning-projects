@@ -1,4 +1,20 @@
-from linked_list import MyListNode
+#referencing gave me some problems, so i just copied this class.
+class MyListNode:
+    def __init__(self, value):
+        self.set_value(value)
+        self.next = None
+
+    def set_value(self, value):
+        self.value = value
+
+    def set_next(self, next):
+        self.next = next
+
+    def get_value(self):
+        return self.value
+
+    def get_next(self):
+        return self.next
 
 class MyStack:
     def __init__(self):
@@ -9,7 +25,7 @@ class MyStack:
         self.head = MyListNode(value)
         self.size = 1
 
-    def __sizeof__(self) -> int:
+    def __len__(self) -> int:
         return self.size
 
     def pop(self):
@@ -24,3 +40,13 @@ class MyStack:
         to_add.set_next(self.head)
         self.head = to_add
         self.size += 1
+
+
+def test():
+    new_stack = MyStack(3)
+    new_stack.push(5)
+    print(new_stack.pop())
+    print(new_stack.pop())
+    
+
+# test()

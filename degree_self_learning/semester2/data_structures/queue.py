@@ -56,5 +56,5 @@ class MyQueue:
         self.size -= 1
         return to_return
 
-    def __sizeof__(self) -> int:
+    def __len__(self) -> int:
         return self.size
