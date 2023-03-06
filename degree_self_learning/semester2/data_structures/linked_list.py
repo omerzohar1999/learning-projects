@@ -1,7 +1,9 @@
 class MyListNode:
     def __init__(self, value):
+        self.value = None
         self.set_value(value)
         self.next = None
+        self.prev = None
 
     def set_value(self, value):
         self.value = value
@@ -9,16 +11,23 @@ class MyListNode:
     def set_next(self, next):
         self.next = next
 
+    def set_prev(self, prev):
+        self.prev = prev
+
     def get_value(self):
         return self.value
 
     def get_next(self):
         return self.next
 
+    def get_prev(self):
+        return self.prev
+
 
 class MyLinkedList:
     def __init__(self, *args):
         self.head = None
+        self.tail = None
         self.size = 0
         for val in args:
             self.insert_last(val)
@@ -27,6 +36,10 @@ class MyLinkedList:
         new_head = MyListNode(value)
         new_head.set_next(self.head)
         self.head = new_head
+        if self.size == 0:
+            self.tail = new_head
+        else:
+            self.head.get_next().set_prev(new_head)
         self.size += 1
 
     def __len__(self) -> int:
@@ -37,9 +50,10 @@ class MyLinkedList:
         if pointer is None:
             self.insert_first(value)
         else:
-            while pointer.next is not None:
-                pointer = pointer.next
-            pointer.next = MyListNode(value)
+            new_tail = MyListNode(value)
+            self.tail.set_next(new_tail)
+            new_tail.set_prev(self.tail)
+            self.tail = new_tail
             self.size += 1
 
     def insert_at(self, value, pos):
@@ -99,6 +113,12 @@ class MyLinkedList:
                     self.size -= 1
                 else:
                     pointer = pointer.get_next()
+
+    def concat(self, to_add_at_end: MyLinkedList):
+        self.size += to_add_at_end.size
+        self.tail.set_next(to_add_at_end.head)
+        to_add_at_end.head.set_prev(self.tail)
+        self.tail = to_add_at_end.tail
     
     def is_empty(self):
         return self.size == 0
