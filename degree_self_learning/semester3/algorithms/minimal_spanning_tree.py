@@ -1,10 +1,26 @@
-from semester2.data_structures.union_find import MyUnionFind
-from semester2.data_structures.fib_heap import MyFibHeap
+import math
 
-INF = -1
+from semester2.data_structures.union_find import MyUnionFind
+from semester2.data_structures.binom_heap import MyBinomialHeap
+
 
 """
-INTRO
+INTRO:
+
+
+
+PSEUDO-CODE FOR GENERAL ALGORITHM:
+
+GENERIC-MST(GRAPH, WEIGHTS):
+    A = EMPTY_GRAPH()
+    WHILE A IS NOT SPANNING TREE:
+        FIND (u,v) SAFE FOR A
+        ADD (u,v) TO A
+    RETURN A
+
+
+
+PROOF OF CORRECTNESS:
 
 
 """
@@ -32,15 +48,20 @@ def mst_kruskal(graph: list, weights: list):
             union_finds[edge[0]].union(union_finds[edge[1]])
 
 
-"""
-PROOF OF CORRECTNESS FOR KRUSKAL
-"""
-
-
 def mst_prim(graph: list, weights: list, root: int):
-    pass
-
-
-"""
-PROOF OF CORRECTNESS FOR PRIM
-"""
+    n = len(graph)
+    nodes_min_heap = MyBinomialHeap()
+    nodes = []
+    parents = [None for i in range(n)]
+    for i in range(n):
+        nodes.append(nodes_min_heap.insert(math.inf, i))
+    nodes_min_heap.delete(nodes[root])
+    nodes_min_heap.insert(0, root)
+    while not nodes_min_heap.is_empty():
+        new_node = nodes_min_heap.pop_min()[1]
+        nodes[new_node] = None
+        for i in range(n):
+            if graph[new_node][i] and nodes[i] is not None and weights[new_node][i] < nodes[i].key:
+                parents[i] = new_node
+                nodes_min_heap.decrease_key(nodes[i], weights[new_node][i])
+    return parents
