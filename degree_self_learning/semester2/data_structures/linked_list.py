@@ -8,8 +8,8 @@ class MyListNode:
     def set_value(self, value):
         self.value = value
 
-    def set_next(self, next):
-        self.next = next
+    def set_next(self, next_node):
+        self.next = next_node
 
     def set_prev(self, prev):
         self.prev = prev
@@ -82,6 +82,8 @@ class MyLinkedList:
             return None
         to_return = self.head.get_value()
         self.head = self.head.get_next()
+        if self.size > 1:
+            self.head.set_prev(None)
         self.size -= 1
         return to_return
 
@@ -114,7 +116,9 @@ class MyLinkedList:
                 else:
                     pointer = pointer.get_next()
 
-    def concat(self, to_add_at_end: MyLinkedList):
+    def concat(self, to_add_at_end):
+        if not to_add_at_end.size:
+            return
         self.size += to_add_at_end.size
         self.tail.set_next(to_add_at_end.head)
         to_add_at_end.head.set_prev(self.tail)
@@ -122,6 +126,32 @@ class MyLinkedList:
     
     def is_empty(self):
         return self.size == 0
+
+    def __sizeof__(self):
+        return self.size
+
+    def __iter__(self):
+        self.iterator = self.head
+        return self
+
+    def __next__(self):
+        if not self.iterator:
+            raise StopIteration
+        ret = self.iterator.value
+        self.iterator = self.iterator.next
+        return ret
+
+    def __getitem(self, key):
+        return self.retrieve_at(key)
+
+    def __contains__(self, item):
+        ptr = self.head
+        while ptr and ptr.value != item:
+            ptr = ptr.next
+        if ptr:
+            return True
+        else:
+            return False
 
     def __str__(self):
         ret = ""
@@ -138,5 +168,6 @@ def test():
     new_list = MyLinkedList(5)
     new_list.pop_first()
     print(len(new_list))
+
 
 test()
