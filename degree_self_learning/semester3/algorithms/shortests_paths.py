@@ -99,3 +99,59 @@ def dijkstra_dial(graph: list, weights: list, s: int, max_weight: int):
         else:
             ptr_min += 1
     return d, pi
+
+
+def johnson(graph: list, weights: list):
+    n = len(graph)
+    new_graph = [graph[i] + [0] for i in range(n)]
+    new_graph.append([1 for i in range(n)] + [0])
+    new_weights = [[weights[i][j] for j in range(len(graph[i]))] + [0] for i in range(n)]
+    new_weights += [0 for i in range(n+1)]
+    negative_cycle_not_exists, potential, parents = bellman_ford(new_graph, new_weights, n)
+    if not negative_cycle_not_exists:
+        return False, [], []
+    new_weights = [weights[i].copy for i in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if graph[i][j]:
+                new_weights[i][j] += potential[i] - potential[j]
+    d = []
+    pi = []
+    for i in range(n):
+        current_d, current_pi = dijkstra(graph, new_weights, i)
+        d.append(current_d)
+        pi.append(current_pi)
+    return True, d, pi
+
+
+def min_sum_product_apsp(graph: list, weights: list) -> list:
+    n = len(graph)
+    return min_sum_product_iterated_squaring(weights, n-1)
+
+
+def min_sum_product_iterated_squaring(matrix: list, times: int) -> list:
+    new_mat = matrix
+    while times > 0:
+        if times % 2 == 0:
+            new_mat = min_sum_product_matrices(new_mat, new_mat)
+            times /= 2
+        else:
+            new_mat = min_sum_product_matrices(new_mat, matrix)
+            times -= 1
+    return new_mat
+
+
+def min_sum_product_matrices(mat1: list, mat2: list) -> list:
+    n = len(mat1)
+    m = len(mat2[0])
+    p = len(mat1[0])
+    min_sum_product = [[float('inf') for j in range(m)] for i in range(n)]
+    for i in range(n):
+        for j in range(m):
+            for k in range(p):
+                min_sum_product[i][j] = min(min_sum_product[i][j], mat1[i][k] + mat2[k][j])
+    return min_sum_product
+
+
+def floyd_warshall():
+    pass
