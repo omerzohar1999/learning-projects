@@ -1,13 +1,48 @@
 import sys
 
 
-def distance(vec1: list, vec2: list):
-    return (sum([(vec1[i] - vec2[i]) ** 2 for i in range(len(vec1))])) ** 0.5
+def distance(vec1: list[float], vec2: list[float]):
+    lst = [(vec1[i] - vec2[i]) ** 2 for i in range(len(vec1))]
+    ret = (sum(lst)) ** 0.5
+    return ret
 
 
-def kmeans(vectors, n, d, k, iters, eps) -> list:
-    clusters = vectors[:k]
-    return []
+def sum_vectors(vec1: list[float], vec2: list[float]):
+    ret = [vec1[i] + vec2[i] for i in range(len(vec1))]
+    return ret
+
+
+def kmeans(vectors: list[list[float]], d: int, k: int, iters: int, eps: float) -> list[list[float]]:
+    centroids = [vectors[i].copy() for i in range(k)]
+
+    for iteration in range(iters):
+        clusters = [[] for i in range(k)]
+        for vector in vectors:
+            dist = distance(vector, centroids[0])
+            min_dist_centroid_index = 0
+            for j in range(k):
+                new_dist = distance(vector, centroids[j])
+                if new_dist < dist:
+                    dist = new_dist
+                    min_dist_centroid_index = j
+            clusters[min_dist_centroid_index].append(vector)
+
+        has_converged = True
+        # update centroids
+        for j in range(k):
+            new_centroid = [0 for i in range(d)]
+            for vector in clusters[j]:
+                new_centroid = sum_vectors(new_centroid, vector)
+            for i in range(d):
+                new_centroid[i] /= (len(clusters[j]) if len(clusters[j]) else 1)
+            if distance(new_centroid, centroids[j]) >= eps:
+                has_converged = False
+            centroids[j] = new_centroid
+
+        if has_converged:  # check if lower than eps
+            break
+
+    return centroids
 
 
 def main():
@@ -33,7 +68,9 @@ def main():
     except Exception as e:
         print("Invalid maximum iteration!")
         return
-    print(kmeans(vectors, n, d, k, iters, eps))
+    centroids = kmeans(vectors, d, k, iters, eps)
+    for centroid in centroids:
+        print(",".join(["%.4f" % centroid[i] for i in range(d)]))
 
 
 if __name__ == "__main__":
