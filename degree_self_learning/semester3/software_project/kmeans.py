@@ -47,7 +47,7 @@ def kmeans(vectors: list[list[float]], d: int, k: int, iters: int, eps: float) -
 
 def main():
     args = sys.argv
-    file_name = args[3]
+    file_name = args[-1]
     eps = 0.001
     file = open(file_name, "r")
     data = file.readlines()
@@ -62,7 +62,7 @@ def main():
         print("Invalid number of clusters!")
         return
     try:
-        iters = int(args[2])
+        iters = int(args[2]) if len(args) == 4 else 200
         if iters <= 1 or iters >= 1000:
             raise ValueError
     except Exception as e:
