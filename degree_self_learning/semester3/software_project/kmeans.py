@@ -16,6 +16,9 @@ def kmeans(vectors: list[list[float]], d: int, k: int, iters: int, eps: float) -
     centroids = [vectors[i].copy() for i in range(k)]
 
     for iteration in range(iters):
+        print(iteration)
+        for centroid in centroids:
+            print(centroid)
         clusters = [[] for i in range(k)]
         for vector in vectors:
             dist = distance(vector, centroids[0])
@@ -54,19 +57,22 @@ def main():
     vectors = [[float(value) for value in line.strip().split(",")] for line in data]
     n = len(vectors)
     d = len(vectors[0]) if n else 0
+    err = 0
     try:
         k = int(args[1])
         if k <= 1 or k >= n:
             raise ValueError
     except Exception as e:
         print("Invalid number of clusters!")
-        return
+        err = 1
     try:
         iters = int(args[2]) if len(args) == 4 else 200
         if iters <= 1 or iters >= 1000:
             raise ValueError
     except Exception as e:
         print("Invalid maximum iteration!")
+        err = 1
+    if err:
         return
     centroids = kmeans(vectors, d, k, iters, eps)
     for centroid in centroids:
