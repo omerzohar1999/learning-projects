@@ -16,9 +16,6 @@ def kmeans(vectors: list[list[float]], d: int, k: int, iters: int, eps: float) -
     centroids = [vectors[i].copy() for i in range(k)]
 
     for iteration in range(iters):
-        print(iteration)
-        for centroid in centroids:
-            print(centroid)
         clusters = [[] for i in range(k)]
         for vector in vectors:
             dist = distance(vector, centroids[0])
